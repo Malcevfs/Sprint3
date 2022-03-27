@@ -8,10 +8,6 @@ import java.util.List;
 public class InMemoryHistoryManager implements HistoryInterface {
 
     protected List<Task> historyList = new ArrayList<>();
-    protected int id;
-    protected String taskMap;
-    protected String description;
-    protected Task.Status status;
 
     public List<Task> getHistory() {
         return historyList;
@@ -31,7 +27,7 @@ public class InMemoryHistoryManager implements HistoryInterface {
         public static final InMemoryHistoryManager INSTANCE = new InMemoryHistoryManager();
     }
 
-    public static InMemoryHistoryManager getInstance() {
+    public static HistoryInterface getInstance() {
         return InMemoryHistoryManager.Service.INSTANCE;
     }
 

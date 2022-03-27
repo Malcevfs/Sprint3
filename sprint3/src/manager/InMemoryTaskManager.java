@@ -96,13 +96,20 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void refreshEpicTask(int id, Epic epic) {
+        Epic epicById = getEpicById(id);
+        if (epicById == null){
+            System.out.println("error");
+            return;
+        }
         epic.setId(id);
+        epic.getNewSubTask().putAll(epicById.getNewSubTask());
         epicTaskMap.put(id, epic);
     }
 
     @Override
     public void deleteEpicTask(int id) {
-        for (int i : epicTaskMap.get(id).getNewSubTask().keySet()) {
+        Epic epic = epicTaskMap.get(id);
+        for (int i : epic.getNewSubTask().keySet()) {
             subTaskMap.remove(i);
         }
         epicTaskMap.remove(id);
@@ -117,11 +124,11 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void refreshSubTask(int id, SubTask subTask) {
         subTask.setId(id);
-        int num = subTaskMap.get(id).getEpicId();
-        Epic epic = epicTaskMap.get(num);
+        int epicId = subTaskMap.get(id).getEpicId();
+        Epic epic = epicTaskMap.get(epicId);
         epic.put(id, subTask);
         subTaskMap.put(id, subTask);
-        epicTaskMap.get(subTask.getEpicId()).setStatus(setEpicStatus(epic.getNewSubTask()));
+        epic.setStatus(setEpicStatus(epic.getNewSubTask()));
     }
 
     @Override

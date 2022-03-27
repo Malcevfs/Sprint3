@@ -9,5 +9,11 @@ public class Managers {
     public static HistoryInterface getDefaultHistory() {
         return InMemoryHistoryManager.getInstance();
     }
+
+    public static HistoryInterface getLinkedListHistory() {
+        return InMemoryHistoryManagerCustomList.getInstance();
+    }
+
+
 }
 
